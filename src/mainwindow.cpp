@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMenu>
-
+#include <iostream>
 #include <sstream>
 
 
@@ -26,7 +26,9 @@ MainWindow::MainWindow(QWidget *my_parent) :
    m_timer->setInterval(10);
    m_timer->start();
 
-   m_appStartTime = boost::posix_time::microsec_clock::universal_time();
+   m_appStartTime = QDateTime::currentDateTime();
+
+   //m_appStartTime.setTime_t(1496076201);
 
 }
 
@@ -38,12 +40,16 @@ MainWindow::~MainWindow()
 void MainWindow::update()
 {
    std::stringstream sshtml;
-   boost::posix_time::ptime now = boost::posix_time::microsec_clock::universal_time();
-   boost::posix_time::time_duration rundiff = now - m_appStartTime;
+
+   time_t diff = (QDateTime::currentDateTime().toTime_t()) - m_appStartTime.toTime_t();
+
+   int hours = diff/3600;
+   int min = (diff%3600) / 60;
+   int sec = diff%60;
 
    sshtml << "This page is a simple QTextEdit that is being filled with HTML text <BR>";
    sshtml << "This page is redrawn every " << m_timer->interval() << " ms <BR>" ;
-   sshtml << "This app has been running for " << rundiff << "<BR>";
+   sshtml << "This app has been running for " << hours << " h "<< min << " m " << sec << " s<BR>";
 
    #ifdef PRINT_DRAW_TIME
    sshtml << "<BR>" << "draw time for HTML " << m_renderTimeHTML << " ms";
@@ -51,18 +57,14 @@ void MainWindow::update()
 
    #ifdef PRINT_DRAW_TIME
    // get start time
-   boost::posix_time::ptime start_time = boost::posix_time::microsec_clock::universal_time();
+   QDateTime start_time = QDateTime::currentDateTime();
    #endif
 
    ui->htmlpage1->setHtml(sshtml.str().c_str());
 
    #ifdef PRINT_DRAW_TIME
-   // get end time
-   boost::posix_time::ptime end_time = boost::posix_time::microsec_clock::universal_time();
-   // get the differance
-   boost::posix_time::time_duration time_diff = end_time - start_time;
-   // save differance in ms to display next frame
-   m_renderTimeHTML = double(time_diff.fractional_seconds() / 1000 );
+   // get the time differance and save differance in ms to display next frame
+   m_renderTimeHTML = start_time.msecsTo(QDateTime::currentDateTime());
 
 #endif
 

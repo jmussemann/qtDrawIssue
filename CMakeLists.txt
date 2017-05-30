@@ -6,11 +6,6 @@ set(target_name QTISSUE)
 #include the common stuff
 #include( ./includecommon.cmake REQUIRED )
 
-# boost
-set(Boost_USE_STATIC_LIBS TRUE)
-find_package( Boost REQUIRED date_time )
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-
 # Qt
 if( USE_QT5 )
   find_package( Qt5 REQUIRED Widgets Gui)
@@ -72,7 +67,6 @@ else()
     set(Extra_Libs pthread rt dl)
 endif()
 target_link_libraries(${target_name}
-    ${Boost_LIBRARIES}  #boost
     ${QT_LIBRARIES} # Qt libs
     ${Extra_Libs}
 )

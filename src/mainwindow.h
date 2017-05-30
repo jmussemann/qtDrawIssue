@@ -8,8 +8,6 @@
 #include <QShortcut>
 #include <QTextBrowser>
 
-#include "boost/date_time/posix_time/posix_time.hpp"
-
 namespace Ui {
     class MainWindow;
 }
@@ -28,11 +26,9 @@ protected:
 private:
     Ui::MainWindow *ui;
     QTimer *m_timer;
-    double m_renderTimeSimple;
     double m_renderTimeHTML;
 
-    boost::posix_time::ptime m_appStartTime;
-
+    QDateTime m_appStartTime;
 protected slots:
 
    void update();
