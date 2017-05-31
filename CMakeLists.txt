@@ -6,6 +6,8 @@ set(target_name QTISSUE)
 #include the common stuff
 #include( ./includecommon.cmake REQUIRED )
 
+set(USE_QT5 1)
+
 # Qt
 if( USE_QT5 )
   find_package( Qt5 REQUIRED Widgets Gui)
