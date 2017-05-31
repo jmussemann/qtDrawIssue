@@ -2,6 +2,6 @@ simple qt app that writes to Qtextedit at a user defined rate. This was created 
 
 at 100 hz it takes about 15 minutes to see the issue
 
-at 10 hz it makes about 10 hours to see the issue
+at 10 hz it makes about 1 hours to see the issue
 
-at 1 hz it takes about a day to see the issue
+at 1 hz it takes about a 6 hr to see the issue
